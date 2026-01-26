@@ -59,8 +59,8 @@ class FeedbackThemeData {
         dragHandleColor ?? (isDark ? Colors.black26 : Colors.white38);
     this.colorScheme = colorScheme ??
         (isDark
-            ? ColorScheme.dark(background: background)
-            : ColorScheme.light(background: background));
+            ? ColorScheme.dark(surface: background)
+            : ColorScheme.light(surface: background));
   }
 
   /// Create a dark version of the [FeedbackThemeData]
@@ -86,6 +86,31 @@ class FeedbackThemeData {
         sheetIsDraggable: sheetIsDraggable,
         brightness: Brightness.light,
       );
+
+  /// Create a feedback theme based on a [ThemeData] instance.
+  factory FeedbackThemeData.fromThemeData(ThemeData theme) {
+    final ColorScheme colorScheme = theme.colorScheme;
+    final TextStyle baseDescriptionStyle =
+        theme.textTheme.bodyMedium ?? _defaultBottomSheetDescriptionStyle;
+    final TextStyle descriptionStyle = baseDescriptionStyle.color == null
+        ? baseDescriptionStyle.copyWith(color: colorScheme.onSurface)
+        : baseDescriptionStyle;
+    final TextStyle baseInputStyle =
+        theme.textTheme.bodyMedium ?? _defaultBottomSheetTextInputStyle;
+    final TextStyle inputStyle = baseInputStyle.color == null
+        ? baseInputStyle.copyWith(color: colorScheme.onSurface)
+        : baseInputStyle;
+
+    return FeedbackThemeData(
+      background: theme.scaffoldBackgroundColor,
+      feedbackSheetColor: colorScheme.surface,
+      activeFeedbackModeColor: colorScheme.primary,
+      bottomSheetDescriptionStyle: descriptionStyle,
+      bottomSheetTextInputStyle: inputStyle,
+      brightness: theme.brightness,
+      colorScheme: colorScheme,
+    );
+  }
 
   /// Brightness of the theme based on the [background] color
   late final Brightness brightness;

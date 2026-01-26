@@ -37,8 +37,11 @@ class ControlsColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isNavigatingActive = FeedbackMode.navigate == mode;
+    final feedbackTheme = FeedbackTheme.of(context);
     return Card(
       margin: EdgeInsets.zero,
+      color: feedbackTheme.feedbackSheetColor,
+      surfaceTintColor: feedbackTheme.feedbackSheetColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(24),

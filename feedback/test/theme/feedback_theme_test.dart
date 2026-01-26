@@ -58,4 +58,28 @@ void main() {
     expect(theme.dragHandleColor, Colors.white);
     expect(theme.colorScheme, const ColorScheme.light());
   });
+
+  test('fromThemeData maps base theme values', () {
+    const ColorScheme scheme = ColorScheme.light(
+      primary: Colors.red,
+      surface: Colors.green,
+      onSurface: Colors.blue,
+    );
+    final theme = ThemeData(
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: Colors.yellow,
+      colorScheme: scheme,
+      textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 12)),
+    );
+
+    final feedbackTheme = FeedbackThemeData.fromThemeData(theme);
+
+    expect(feedbackTheme.background, Colors.yellow);
+    expect(feedbackTheme.feedbackSheetColor, Colors.green);
+    expect(feedbackTheme.activeFeedbackModeColor, Colors.red);
+    expect(feedbackTheme.bottomSheetDescriptionStyle.color, Colors.blue);
+    expect(feedbackTheme.bottomSheetTextInputStyle.color, Colors.blue);
+    expect(feedbackTheme.brightness, Brightness.light);
+    expect(feedbackTheme.colorScheme, scheme);
+  });
 }

@@ -1,3 +1,12 @@
+## [3.2.0+chatonvite.darkmode.1]
+
+- Derive feedback themes from `MaterialApp` theme/darkTheme when not provided
+- Add `FeedbackThemeData.fromThemeData` and align sheet/surface colors with app theme
+- Update dark theme selection and controls card surface tinting
+- Modernize web HTML renderer JS interop
+- Refresh example iOS project (iOS 13+, Xcode updates) and bump example deps
+- Add theme mapping tests and expand docs
+
 ## [3.2.0]
 
 - Hebrew translations

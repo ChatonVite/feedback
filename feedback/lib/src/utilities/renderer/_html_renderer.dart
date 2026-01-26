@@ -1,14 +1,14 @@
 // ignore_for_file: public_member_api_docs
 // coverage:ignore-file
 
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:js' as js;
+import 'dart:js_interop';
+import 'dart:js_interop_unsafe';
 
 import 'package:flutter/material.dart';
 
 void printErrorMessage() {
-  final dynamic flutterCanvasKit = js.context['flutterCanvasKit'];
-  if (flutterCanvasKit != null) {
+  final JSAny? flutterCanvasKit = globalContext['flutterCanvasKit'];
+  if (flutterCanvasKit.isDefinedAndNotNull) {
     return;
   }
   // Seems like the user is on the Flutter HTML renderer.

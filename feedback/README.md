@@ -185,6 +185,10 @@ void main() {
   );
 }
 ```
+If `BetterFeedback` wraps a `MaterialApp`, it will automatically derive its
+light/dark feedback themes from `MaterialApp.theme` and `MaterialApp.darkTheme`
+when you do not pass `theme`, `darkTheme`, or `themeMode`. This keeps the
+feedback UI aligned with your app's day/night mode.
 How the properties of `FeedbackThemeData` correspond to the view can be seen in the following image. 
 <img src="https://raw.githubusercontent.com/ueman/feedback/master/img/theme_description.png" max-height="400" alt="Theme Usages">
 
