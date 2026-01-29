@@ -219,13 +219,18 @@ class _BetterFeedbackState extends State<BetterFeedback> {
   Widget build(BuildContext context) {
     final MaterialApp? materialApp =
         widget.child is MaterialApp ? widget.child as MaterialApp : null;
+    final ThemeMode? overrideThemeMode = controller.themeModeOverride;
+    final FeedbackThemeData? overrideTheme = controller.themeOverride;
+    final FeedbackThemeData? overrideDarkTheme = controller.darkThemeOverride;
     final ThemeMode? effectiveThemeMode =
-        widget.themeMode ?? materialApp?.themeMode;
-    final FeedbackThemeData? effectiveTheme = widget.theme ??
+        overrideThemeMode ?? widget.themeMode ?? materialApp?.themeMode;
+    final FeedbackThemeData? effectiveTheme = overrideTheme ??
+        widget.theme ??
         (materialApp?.theme != null
             ? FeedbackThemeData.fromThemeData(materialApp!.theme!)
             : null);
-    final FeedbackThemeData? effectiveDarkTheme = widget.darkTheme ??
+    final FeedbackThemeData? effectiveDarkTheme = overrideDarkTheme ??
+        widget.darkTheme ??
         (materialApp?.darkTheme != null
             ? FeedbackThemeData.fromThemeData(materialApp!.darkTheme!)
             : null);

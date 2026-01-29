@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:example/feedback_functions.dart';
 import 'package:feedback/feedback.dart';
+import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -162,6 +163,21 @@ class MyHomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
               ],
+              ElevatedButton(
+                child: const Text('Provide Sentry feedback (themed)'),
+                onPressed: () {
+                  BetterFeedback.of(context).show(
+                    sendToSentry(
+                      name: 'Foo Bar',
+                      email: 'foo_bar@example.com',
+                    ),
+                    themeMode: ThemeMode.system,
+                    theme: FeedbackThemeData.light(),
+                    darkTheme: FeedbackThemeData.dark(),
+                  );
+                },
+              ),
+              const SizedBox(height: 10),
               ElevatedButton(
                 child: const Text('Provide feedback via platform sharing'),
                 onPressed: () {

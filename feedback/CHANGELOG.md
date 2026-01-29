@@ -1,3 +1,10 @@
+## [3.2.0+chatonvite.darkmode.2]
+
+- Allow per-session theme overrides via `FeedbackController.show`
+- Respect controller theme overrides in `BetterFeedback`
+- Add example Sentry feedback button with theme override demo
+- Exclude example app from analyzer and add controller theme override tests
+
 ## [3.2.0+chatonvite.darkmode.1]
 
 - Derive feedback themes from `MaterialApp` theme/darkTheme when not provided
