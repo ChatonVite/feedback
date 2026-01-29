@@ -247,6 +247,13 @@ in the screenshot.
 - Web only works with Flutter's CanvasKit Renderer. For more information on how to use it, see [Flutter Web Renderer docs](https://flutter.dev/docs/development/tools/web-renderers).
 - If you are using [showDialog](https://api.flutter.dev/flutter/material/showDialog.html), you will notice that the [Dialog](https://api.flutter.dev/flutter/material/Dialog-class.html) is rendered above the `BetterFeedback`. To prevent this you have to set `useRootNavigator` in `showDialog` to `false`.
 
+## Recent changes (3.2.0+chatonvite.darkmode.3)
+
+- Add controls column theming (icons, text, divider, disabled colors).
+- Support per-session controls theme overrides via `FeedbackController.show`.
+- Add `ControlsColumnBuilder` customization hook with `isNavigatingActive`.
+- Allow color picker dots to keep their colors when disabled.
+
 ## 📣 Maintainer
 
 Hey, I'm Jonas Uekötter. I created this awesome software. Visit my [GitHub profile](https://github.com/ueman) and follow me on [Twitter](https://twitter.com/ue_man). If you like this, please leave a like or star it on GitHub.

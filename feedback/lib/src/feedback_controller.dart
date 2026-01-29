@@ -15,6 +15,7 @@ class FeedbackController extends ChangeNotifier {
   ThemeMode? _themeModeOverride;
   FeedbackThemeData? _themeOverride;
   FeedbackThemeData? _darkThemeOverride;
+  FeedbackControlsThemeData? _controlsThemeOverride;
 
   /// The overridden theme mode for the active feedback session.
   ThemeMode? get themeModeOverride => _themeModeOverride;
@@ -24,6 +25,10 @@ class FeedbackController extends ChangeNotifier {
 
   /// The overridden dark theme for the active feedback session.
   FeedbackThemeData? get darkThemeOverride => _darkThemeOverride;
+
+  /// The overridden controls theme for the active feedback session.
+  FeedbackControlsThemeData? get controlsThemeOverride =>
+      _controlsThemeOverride;
 
   /// Open the feedback ui.
   /// After the user submitted his feedback [onFeedback] is called.
@@ -37,12 +42,14 @@ class FeedbackController extends ChangeNotifier {
     ThemeMode? themeMode,
     FeedbackThemeData? theme,
     FeedbackThemeData? darkTheme,
+    FeedbackControlsThemeData? controlsTheme,
   }) {
     _isVisible = true;
     this.onFeedback = onFeedback;
     _themeModeOverride = themeMode;
     _themeOverride = theme;
     _darkThemeOverride = darkTheme;
+    _controlsThemeOverride = controlsTheme;
     notifyListeners();
   }
 
@@ -53,6 +60,7 @@ class FeedbackController extends ChangeNotifier {
     _themeModeOverride = null;
     _themeOverride = null;
     _darkThemeOverride = null;
+    _controlsThemeOverride = null;
     notifyListeners();
   }
 

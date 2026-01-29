@@ -1,3 +1,11 @@
+## [3.2.0+chatonvite.darkmode.3]
+
+- Add controls column theming (icons, text, divider, disabled colors)
+- Support per-session controls theme overrides via `FeedbackController.show`
+- Add `ControlsColumnBuilder` customization hook with `isNavigatingActive`
+- Allow color picker dots to keep their colors when disabled
+- Update README guidance for controls theming APIs
+
 ## [3.2.0+chatonvite.darkmode.2]
 
 - Allow per-session theme overrides via `FeedbackController.show`

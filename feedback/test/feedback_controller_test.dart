@@ -39,17 +39,24 @@ void main() {
       final controller = FeedbackController();
       final theme = FeedbackThemeData.light();
       final darkTheme = FeedbackThemeData.dark();
+      const controlsTheme = FeedbackControlsThemeData(
+        iconColor: Colors.red,
+        dividerColor: Colors.green,
+        useColorEvenIfDisabled: true,
+      );
 
       controller.show(
         (_) {},
         themeMode: ThemeMode.dark,
         theme: theme,
         darkTheme: darkTheme,
+        controlsTheme: controlsTheme,
       );
 
       expect(controller.themeModeOverride, ThemeMode.dark);
       expect(controller.themeOverride, theme);
       expect(controller.darkThemeOverride, darkTheme);
+      expect(controller.controlsThemeOverride, controlsTheme);
     });
 
     test(' hide clears theme overrides', () {
@@ -59,12 +66,14 @@ void main() {
         themeMode: ThemeMode.dark,
         theme: FeedbackThemeData.light(),
         darkTheme: FeedbackThemeData.dark(),
+        controlsTheme: const FeedbackControlsThemeData(),
       );
 
       controller.hide();
       expect(controller.themeModeOverride, null);
       expect(controller.themeOverride, null);
       expect(controller.darkThemeOverride, null);
+      expect(controller.controlsThemeOverride, null);
     });
   });
 }

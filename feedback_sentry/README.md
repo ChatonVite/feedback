@@ -44,6 +44,38 @@ BetterFeedback.of(context).showAndUploadToSentry(
 ```
 Provide a way to hide the feedback panel by calling  `BetterFeedback.of(context).hide();` 
 
+### Themed controls (updated API)
+
+`showAndUploadToSentry` is a convenience method. If you need to customize
+themes or controls for a single feedback session, call `show(...)` with
+`sendToSentry(...)` and pass the new override parameters:
+
+```dart
+import 'package:feedback/feedback.dart';
+import 'package:feedback_sentry/feedback_sentry.dart';
+import 'package:flutter/material.dart';
+
+BetterFeedback.of(context).show(
+  sendToSentry(
+    name: 'Foo Bar',
+    email: 'foo_bar@example.com',
+  ),
+  themeMode: ThemeMode.system,
+  theme: FeedbackThemeData.light(),
+  darkTheme: FeedbackThemeData.dark(),
+  controlsTheme: const FeedbackControlsThemeData(
+    iconColor: Colors.white,
+    disabledIconColor: Colors.white54,
+    dividerColor: Colors.white24,
+    useColorEvenIfDisabled: true,
+  ),
+);
+```
+
+### Recent changes (3.2.0+chatonvite.darkmode.3)
+
+- Document per-session theme/controls overrides when using `sendToSentry`.
+
 
 ## 📣  Author
 

@@ -105,6 +105,7 @@ class BetterFeedback extends StatefulWidget {
     super.key,
     required this.child,
     this.feedbackBuilder,
+    this.controlsColumnBuilder,
     this.themeMode,
     this.theme,
     this.darkTheme,
@@ -126,6 +127,9 @@ class BetterFeedback extends StatefulWidget {
   /// Defaults to [StringFeedback] which uses a single editable text field to
   /// prompt for input.
   final FeedbackBuilder? feedbackBuilder;
+
+  /// Optional builder for customizing the controls column UI.
+  final ControlsColumnBuilder? controlsColumnBuilder;
 
   /// Determines which theme will be used by the Feedback UI.
   /// If set to [ThemeMode.system], the choice of which theme to use will be based
@@ -222,6 +226,8 @@ class _BetterFeedbackState extends State<BetterFeedback> {
     final ThemeMode? overrideThemeMode = controller.themeModeOverride;
     final FeedbackThemeData? overrideTheme = controller.themeOverride;
     final FeedbackThemeData? overrideDarkTheme = controller.darkThemeOverride;
+    final FeedbackControlsThemeData? overrideControlsTheme =
+        controller.controlsThemeOverride;
     final ThemeMode? effectiveThemeMode =
         overrideThemeMode ?? widget.themeMode ?? materialApp?.themeMode;
     final FeedbackThemeData? effectiveTheme = overrideTheme ??
@@ -234,11 +240,21 @@ class _BetterFeedbackState extends State<BetterFeedback> {
         (materialApp?.darkTheme != null
             ? FeedbackThemeData.fromThemeData(materialApp!.darkTheme!)
             : null);
+    final FeedbackThemeData? themedLight = _applyControlsThemeOverride(
+      effectiveTheme,
+      overrideControlsTheme,
+      fallback: FeedbackThemeData.light(),
+    );
+    final FeedbackThemeData? themedDark = _applyControlsThemeOverride(
+      effectiveDarkTheme,
+      overrideControlsTheme,
+      fallback: FeedbackThemeData.dark(),
+    );
 
     return FeedbackApp(
       themeMode: effectiveThemeMode,
-      theme: effectiveTheme,
-      darkTheme: effectiveDarkTheme,
+      theme: themedLight,
+      darkTheme: themedDark,
       localizationsDelegates: widget.localizationsDelegates,
       localeOverride: widget.localeOverride,
       child: Builder(builder: (context) {
@@ -254,6 +270,7 @@ class _BetterFeedbackState extends State<BetterFeedback> {
                 pixelRatio: widget.pixelRatio,
                 feedbackBuilder:
                     widget.feedbackBuilder ?? simpleFeedbackBuilder,
+                controlsColumnBuilder: widget.controlsColumnBuilder,
                 child: widget.child,
               );
             },
@@ -266,4 +283,40 @@ class _BetterFeedbackState extends State<BetterFeedback> {
   void onUpdateOfController() {
     setState(() {});
   }
+}
+
+FeedbackThemeData? _applyControlsThemeOverride(
+  FeedbackThemeData? base,
+  FeedbackControlsThemeData? override, {
+  required FeedbackThemeData fallback,
+}) {
+  if (override == null && base == null) {
+    return null;
+  }
+
+  final FeedbackThemeData resolvedBase = base ?? fallback;
+  if (override == null) {
+    return resolvedBase;
+  }
+
+  final FeedbackControlsThemeData mergedControlsTheme =
+      _mergeControlsTheme(resolvedBase.controlsTheme, override);
+  return resolvedBase.copyWith(controlsTheme: mergedControlsTheme);
+}
+
+FeedbackControlsThemeData _mergeControlsTheme(
+  FeedbackControlsThemeData? base,
+  FeedbackControlsThemeData override,
+) {
+  if (base == null) {
+    return override;
+  }
+  return base.copyWith(
+    iconColor: override.iconColor,
+    disabledIconColor: override.disabledIconColor,
+    textStyle: override.textStyle,
+    dividerColor: override.dividerColor,
+    colorPickerDisabledColor: override.colorPickerDisabledColor,
+    useColorEvenIfDisabled: override.useColorEvenIfDisabled,
+  );
 }

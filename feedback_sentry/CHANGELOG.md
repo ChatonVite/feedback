@@ -1,3 +1,7 @@
+## 3.2.0+chatonvite.darkmode.3
+
+* Document per-session theme/controls overrides when using `sendToSentry`
+
 ## 3.2.0
 
 * Require `sentry ^9.0.0`

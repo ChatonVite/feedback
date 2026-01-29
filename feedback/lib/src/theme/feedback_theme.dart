@@ -40,6 +40,7 @@ class FeedbackThemeData {
       this.drawColors = _defaultDrawColors,
       this.bottomSheetDescriptionStyle = _defaultBottomSheetDescriptionStyle,
       this.bottomSheetTextInputStyle = _defaultBottomSheetTextInputStyle,
+      this.controlsTheme,
       this.sheetIsDraggable = true,
       Brightness? brightness,
       Color? dragHandleColor,
@@ -107,6 +108,12 @@ class FeedbackThemeData {
       activeFeedbackModeColor: colorScheme.primary,
       bottomSheetDescriptionStyle: descriptionStyle,
       bottomSheetTextInputStyle: inputStyle,
+      controlsTheme: FeedbackControlsThemeData(
+        iconColor: theme.iconTheme.color,
+        disabledIconColor: theme.disabledColor,
+        textStyle: theme.textTheme.labelLarge,
+        dividerColor: theme.dividerColor,
+      ),
       brightness: theme.brightness,
       colorScheme: colorScheme,
     );
@@ -139,6 +146,9 @@ class FeedbackThemeData {
   /// Text Style of the text input.
   final TextStyle bottomSheetTextInputStyle;
 
+  /// Theme data for the controls column.
+  final FeedbackControlsThemeData? controlsTheme;
+
   /// Whether or not the bottom sheet is draggable.
   ///
   /// If this is set to true, the user feedback form will be wrapped in a
@@ -162,6 +172,7 @@ class FeedbackThemeData {
     List<Color>? drawColors,
     TextStyle? bottomSheetDescriptionStyle,
     TextStyle? bottomSheetTextInputStyle,
+    FeedbackControlsThemeData? controlsTheme,
     bool? sheetIsDraggable,
     Color? dragHandleColor,
     Brightness? brightness,
@@ -178,10 +189,63 @@ class FeedbackThemeData {
           bottomSheetDescriptionStyle ?? this.bottomSheetDescriptionStyle,
       bottomSheetTextInputStyle:
           bottomSheetTextInputStyle ?? this.bottomSheetTextInputStyle,
+      controlsTheme: controlsTheme ?? this.controlsTheme,
       sheetIsDraggable: sheetIsDraggable ?? this.sheetIsDraggable,
       dragHandleColor: dragHandleColor ?? this.dragHandleColor,
       brightness: brightness ?? this.brightness,
       colorScheme: colorScheme ?? this.colorScheme,
+    );
+  }
+}
+
+/// Theme data for customizing the feedback controls column.
+class FeedbackControlsThemeData {
+  /// Creates a [FeedbackControlsThemeData].
+  const FeedbackControlsThemeData({
+    this.iconColor,
+    this.disabledIconColor,
+    this.textStyle,
+    this.dividerColor,
+    this.colorPickerDisabledColor,
+    this.useColorEvenIfDisabled,
+  });
+
+  /// The color for enabled control icons.
+  final Color? iconColor;
+
+  /// The color for disabled control icons.
+  final Color? disabledIconColor;
+
+  /// Text style for the controls text labels.
+  final TextStyle? textStyle;
+
+  /// Divider color between control groups.
+  final Color? dividerColor;
+
+  /// Overrides the disabled color for the color picker buttons.
+  final Color? colorPickerDisabledColor;
+
+  /// Keeps the color picker buttons colored even if disabled.
+  final bool? useColorEvenIfDisabled;
+
+  /// Creates a copy with the provided values replaced.
+  FeedbackControlsThemeData copyWith({
+    Color? iconColor,
+    Color? disabledIconColor,
+    TextStyle? textStyle,
+    Color? dividerColor,
+    Color? colorPickerDisabledColor,
+    bool? useColorEvenIfDisabled,
+  }) {
+    return FeedbackControlsThemeData(
+      iconColor: iconColor ?? this.iconColor,
+      disabledIconColor: disabledIconColor ?? this.disabledIconColor,
+      textStyle: textStyle ?? this.textStyle,
+      dividerColor: dividerColor ?? this.dividerColor,
+      colorPickerDisabledColor:
+          colorPickerDisabledColor ?? this.colorPickerDisabledColor,
+      useColorEvenIfDisabled:
+          useColorEvenIfDisabled ?? this.useColorEvenIfDisabled,
     );
   }
 }

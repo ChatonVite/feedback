@@ -27,6 +27,7 @@ class FeedbackWidget extends StatefulWidget {
     required this.mode,
     required this.pixelRatio,
     required this.feedbackBuilder,
+    this.controlsColumnBuilder,
   }) : assert(
           // This way, we can have a const constructor
           // ignore: prefer_is_empty
@@ -41,6 +42,7 @@ class FeedbackWidget extends StatefulWidget {
   final List<Color> drawColors;
 
   final FeedbackBuilder feedbackBuilder;
+  final ControlsColumnBuilder? controlsColumnBuilder;
 
   @override
   FeedbackWidgetState createState() => FeedbackWidgetState();
@@ -216,8 +218,13 @@ class FeedbackWidgetState extends State<FeedbackWidget>
                             child: ScaleAndFade(
                               progress: sheetProgress,
                               minScale: .7,
-                              child: ControlsColumn(
+                              child: (widget.controlsColumnBuilder ??
+                                  _buildDefaultControlsColumn)(
+                                context,
                                 mode: mode,
+                                isNavigatingActive:
+                                    FeedbackMode.navigate == mode,
+                                feedbackTheme: FeedbackTheme.of(context),
                                 activeColor: painterController.drawColor,
                                 colors: widget.drawColors,
                                 onColorChanged: (color) {
@@ -364,6 +371,31 @@ class FeedbackWidgetState extends State<FeedbackWidget>
 const _screenshotId = 'screenshot_id';
 const _controlsColumnId = 'controls_column_id';
 const _sheetId = 'sheet_id';
+
+Widget _buildDefaultControlsColumn(
+  BuildContext context, {
+  required FeedbackMode mode,
+  required bool isNavigatingActive,
+  required FeedbackThemeData feedbackTheme,
+  required Color activeColor,
+  required List<Color> colors,
+  required ValueChanged<Color> onColorChanged,
+  required VoidCallback onUndo,
+  required ValueChanged<FeedbackMode> onControlModeChanged,
+  required VoidCallback onCloseFeedback,
+  required VoidCallback onClearDrawing,
+}) {
+  return ControlsColumn(
+    mode: mode,
+    activeColor: activeColor,
+    colors: colors,
+    onColorChanged: onColorChanged,
+    onUndo: onUndo,
+    onClearDrawing: onClearDrawing,
+    onControlModeChanged: onControlModeChanged,
+    onCloseFeedback: onCloseFeedback,
+  );
+}
 
 class _FeedbackLayoutDelegate extends MultiChildLayoutDelegate {
   _FeedbackLayoutDelegate({
